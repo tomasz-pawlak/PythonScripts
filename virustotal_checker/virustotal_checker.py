@@ -17,6 +17,7 @@ parser = argparse.ArgumentParser(description="VirusTotal hash checker")
 group = parser.add_mutually_exclusive_group(required=True)
 group.add_argument("-f", "--file", help="Path to file")
 group.add_argument("-hs", "--hash", help="Hash to check")
+group.add_argument("-u", "--url", help="url to check")
 parser.add_argument("-k", "--key", type=str, required=True, help="VirusTotal API key")
 
 args = parser.parse_args()
@@ -25,13 +26,19 @@ client = vt.Client(args.key)
 if args.file:
     sha256 = get_sha256(args.file)
     print(Fore.CYAN + f"[INFO] SHA256 from file: {sha256}")
-else:
+elif args.hash:
     sha256 = args.hash
     print(Fore.CYAN + f"[INFO] Using provided hash: {sha256}")
+else:
+    sha256 = vt.url_id(args.url)
+    print(Fore.CYAN + f"[INFO] Using provided hash from url: {sha256}")
 
 try:
     file = client.get_object(f"/files/{sha256}")
-    print(Fore.RED + f"{file.last_analysis_stats}")
+    print(Fore.RED + "[INFO] Detection ratios:")
+    print(f"  Malicious: {file.last_analysis_stats['malicious']}")
+    print(f"  Suspicious: {file.last_analysis_stats['suspicious']}")
+    print(f"  Undetected: {file.last_analysis_stats['undetected']}")
 except vt.error.APIError as e:
     print("We currently don't have any comments that fit your search")
 finally:
