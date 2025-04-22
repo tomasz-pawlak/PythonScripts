@@ -1,62 +1,50 @@
-# Python Security Scripts
+# PythonScripts
 
-This repository contains a collection of Python tools and scripts that I am developing for use in cybersecurity – both defensive (Blue Team) and offensive (Red Team).
+A collection of Python scripts related to cybersecurity, automation, and data analysis. The project is divided into offensive and defensive sections.
 
-The scripts are organized into separate folders to maintain order and allow for easier expansion of the repository in the future.
+## Directory Structure
 
-## Repository Structure
-
-/
-├── log_watcher/ # Log monitoring and notification sending
-├── mdm_parser/ # Parsing MDM data
-├── port_scanner/ # Simple port scanner
-├── ... # Additional tools will be added over time
-
-
-## Goal
-
-The goal of this repository is to develop skills in:
-
-- Python programming  
-- Automating security-related tasks  
-- Creating practical tools useful in SOC operations and penetration testing
+- `blue/` – Defensive scripts (monitoring, analysis, automation)
+- `red/` – Offensive scripts (pentesting, OSINT, reconnaissance)
+- `utils/` – Helper tools
+- `README.md` – Project documentation
 
 ## Requirements
 
-- Python 3.8 or newer  
-- Dependencies for individual projects can be found in their respective folders (e.g., `requirements.txt`, if applicable)
+- Python 3.8 or higher
 
-## Notes
+## Usage
 
-Each folder contains a separate project with a brief description and, if necessary, instructions for running the project. The repository will be continuously updated with new scripts and tools as I gain more knowledge and experience.
+Navigate to the script directory and run it with Python:
 
----------------------------------------
+cd blue
+python selected_script.py
 
-# Python Security Scripts
+-----------------------------------
+ 
 
-To repozytorium zawiera zestaw narzędzi i skryptów w Pythonie, które tworzę z myślą o zastosowaniach w cyberbezpieczeństwie – zarówno defensywnych (Blue Team), jak i ofensywnych (Red Team).
+# PythonScripts
 
-Skrypty podzielone są na osobne foldery, aby utrzymać porządek i umożliwić łatwiejszą rozbudowę repozytorium w przyszłości.
+Zbiór skryptów w języku Python związanych z cyberbezpieczeństwem, automatyzacją oraz analizą danych. Projekt podzielony jest na część ofensywną i defensywną.
 
-## Struktura repozytorium
+## Struktura katalogów
 
-/ ├── log_watcher/ # Monitorowanie logów i wysyłka powiadomień ├── mdm_parser/ # Analiza danych z MDM ├── port_scanner/ # Prosty skaner portów ├── ... # Kolejne narzędzia będą dodawane z czasem
-
-
-## Cel
-
-Celem repozytorium jest rozwój umiejętności w zakresie:
-- Programowania w Pythonie
-- Automatyzacji zadań związanych z bezpieczeństwem
-- Tworzenia praktycznych narzędzi przydatnych w pracy w SOC i pentestach
-
+- `blue/` – Skrypty defensywne (monitoring, analiza, automatyzacja)
+- `red/` – Skrypty ofensywne (pentesty, OSINT, rekonesans)
+- `utils/` – Narzędzia pomocnicze
+- `README.md` – Dokumentacja projektu
 ## Wymagania
 
 - Python 3.8 lub nowszy
-- Zależności dla poszczególnych projektów znajdują się w ich folderach (`requirements.txt`, jeśli dotyczy)
 
-## Uwagi
 
-Każdy folder zawiera osobny projekt z krótkim opisem i ewentualną instrukcją uruchomienia. Repozytorium będzie rozwijane o nowe skrypty i narzędzia wraz z nauką i doświadczeniem.
+## Uruchomienie
 
----
+Wejdź do katalogu ze skryptem i uruchom go za pomocą Pythona:
+
+cd blue
+python wybrany_skrypt.py
+
+## Dokumentacja
+
+Każdy skrypt zawiera opis w nagłówku lub osobnym pliku README.md, jeśli to konieczne.
