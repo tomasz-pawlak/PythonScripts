@@ -1,6 +1,12 @@
+import argparse
 import os
 import stat
 from pathlib import Path
+
+parser = argparse.ArgumentParser(description="Detect suspicious filenames")
+parser.add_argument("-d", "--directory",default=".", help="Directory to scan")
+
+args = parser.parse_args()
 
 extensions = [".exe", ".js", ".scr", ".vbs", ".bat", ".cmd", ".ps1"]
 keywords = ["invoice", "password", "login", "bank", "report"]
@@ -59,4 +65,4 @@ def scan_directory(directory: str):
         print(f"\n No suspicious file in directory {directory}")
 
 
-scan_directory("")
+scan_directory(args.directory)
