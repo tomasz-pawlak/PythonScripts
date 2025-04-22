@@ -59,21 +59,4 @@ def scan_directory(directory: str):
         print(f"\n No suspicious file in directory {directory}")
 
 
-def print_files(directory: str):
-    directory = Path(directory)
-    suspicious_filenames = []
-
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            full_path = Path(root) / file
-            suspicious_filenames.append(full_path)
-
-    if suspicious_filenames:
-        print("\nSuspicious file:")
-        for file in suspicious_filenames:
-            print(file)
-    else:
-        print(f"\n No suspicious file in directory {directory}")
-
-
 scan_directory("")
