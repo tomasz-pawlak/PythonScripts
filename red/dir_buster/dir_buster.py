@@ -22,7 +22,7 @@ def brute_force(base_url, wordlist_path, accepted_codes):
                 try:
                     response = requests.get(url, timeout=5)
                     if response.status_code in accepted_codes:
-                        print(f"\n[+] Found: {url}")
+                        print(f"\n[+] Found: {url}, code {response.status_code}\n")
                 except requests.RequestException:
                     pass
                 print(f"[{index}/{total}] Checked: /{path}", end='\r')
