@@ -11,13 +11,14 @@ from email.mime.text import MIMEText
 load_dotenv(".env.example")
 
 parser = argparse.ArgumentParser(description="")
-parser.add_argument("-ss", "--smtp-server", required=True, help="SMTP server address")
-parser.add_argument("--sp", "--smtp-port", type=int, default=465, help="SMTP server port (default: 465)")
-parser.add_argument("-u", "--smtp-username", required=True, help="SMTP username")
-parser.add_argument("-up", "--smtp-password", required=True, help="SMTP password")
-parser.add_argument("-r", "--receiver", required=True, help="Receiver email address")
-
 args = parser.parse_args()
+
+smtp_server = os.getenv("SMTP_SERVER")
+smtp_port = int(os.getenv("SMTP_PORT", "465"))
+smtp_username = os.getenv("SMTP_USERNAME")
+smtp_password = os.getenv("SMTP_PASSWORD")
+email_receiver = os.getenv("EMAIL_RECEIVER")
+
 
 logging.basicConfig(filename='edr_alerts.log', level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
@@ -39,12 +40,12 @@ def send_email(subject, body):
     try:
         msg = MIMEText(body)
         msg['Subject'] = subject
-        msg['From'] = f'SOC team <{args.smtp_username}>'
-        msg['To'] = args.receiver
+        msg['From'] = f'SOC team <{smtp_username}>'
+        msg['To'] = email_receiver
 
-        server = smtplib.SMTP_SSL(args.smtp_server, args.sp)
-        server.login(args.smtp_username, args.smtp_password)
-        server.sendmail(args.smtp_username, args.receiver, msg.as_string())
+        server = smtplib.SMTP_SSL(smtp_server, smtp_port)
+        server.login(smtp_username, smtp_password)
+        server.sendmail(smtp_username, email_receiver, msg.as_string())
 
         print("Email sent successfully")
         server.quit()
@@ -67,6 +68,6 @@ def monitor_processes():
                     logging.info(f"Proces {proc_name} (PID: {proc.pid}) terminated")
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 continue
-        time.sleep(5)
+        time.sleep(2)
 
 monitor_processes()
