@@ -3,11 +3,12 @@ import platform
 import smtplib
 import os
 import time
+from dotenv import load_dotenv
+import logging
+import psutil
 from email.mime.text import MIMEText
 
-import logging
-
-import psutil
+load_dotenv(".env.example")
 
 parser = argparse.ArgumentParser(description="")
 parser.add_argument("-ss", "--smtp-server", required=True, help="SMTP server address")
