@@ -2,10 +2,13 @@ import argparse
 import platform
 import smtplib
 import os
+import threading
 import time
 from dotenv import load_dotenv
 import logging
 import psutil
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 from email.mime.text import MIMEText
 
 load_dotenv(".env.example")
@@ -70,4 +73,45 @@ def monitor_processes():
                 continue
         time.sleep(2)
 
-monitor_processes()
+class FolderHandler(FileSystemEventHandler):
+    def process(self, event, action):
+        msg = f"[Folder] {action} {event.src_path}"
+        logging.warning(msg)
+        send_email("Alert", msg)
+
+    def on_created(self, event):
+        self.process(event, "created")
+
+    def on_modified(self, event):
+        self.process(event, "Modified")
+
+    def on_deleted(self, event):
+        self.process(event, "Deleted")
+
+def monitor_directories():
+    logging.info("Monitoring directories...")
+    event_handler = FolderHandler()
+    observer = Observer()
+
+    for path in monitored_dirs:
+        if os.path.exists(path):
+            observer.schedule(event_handler, path, recursive=True)
+
+    observer.start()
+    try:
+        while True:
+            time.sleep(3)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+if __name__ == "__main__":
+    t1 = threading.Thread(target=monitor_processes, daemon=True)
+    t2 = threading.Thread(target=monitor_directories, daemon=True)
+
+    t1.start()
+    t2.start()
+
+    logging.info("System EDR-lite is working...")
+    while True:
+        time.sleep(60)
